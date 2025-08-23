@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +29,12 @@
   
 	<section class="login">
 	  <h2>회원가입</h2>
+	  
+	  <!-- 회원가입 실패 시 -->
+	    <c:if test="${not empty errorMsg }">
+	    	<p style="text-align: center; color: red;">${errorMsg}</p>
+	    </c:if>
+	  
 	  <form action="joinAction.do" method="post">
 	    <label>아이디</label>
 	    <input type="text" name="joinId" required>
@@ -45,7 +53,7 @@
 		<br>
 	    <button type="submit">회원가입</button>
 	  </form>
-	</section>
+	 </section>
 
   <footer>
     <p>(c) 2025 동네 병원·약국 안내 | Team JSP Mini Project</p>

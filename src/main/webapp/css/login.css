@@ -53,3 +53,14 @@
 .login button:hover {
   background-color: #3498db;
 }
+
+.joinorsearch {
+  text-align: center;
+  margin-top: 15px;
+  color: #34495e;
+}
+
+.joinorsearch span a {
+  text-decoration: none;
+  color: #34495e;
+}

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,10 +26,12 @@
   
   <main>
 	<section class="home">
-	<h2>환영합니다!</h2>
+	<h2>${sessionScope.sessionId } 환영합니다!</h2>
 	<p>우리 동네 병원, 약국 정보를 한눈에 확인하세요.</p>
 	<p>건강 꿀팁은 게시판에서 공유할 수 있습니다!</p>
 	
+	<hr/>
+	<p>테스트용 링크 삽입</p>
     <p><a href="index.do">홈</a></p>
     <p><a href="login.do">로그인</a></p>
     <p><a href="join.do">회원가입</a></p>
@@ -43,5 +46,14 @@
   <footer>
     <p>(c) 2025 동네 병원·약국 안내 | Team JSP Mini Project</p>
   </footer>
+  
+  <!-- 자바스크립트 -->
+  <script>
+  // 로그아웃 시
+	<c:if test="${not empty successMsg }">
+		alert("${successMsg }");
+	</c:if>
+  </script>
+  
 </body>
 </html>

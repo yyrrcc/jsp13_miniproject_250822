@@ -59,15 +59,13 @@ public class FrontController extends HttpServlet {
         	
         	int loginResult = memberDao.loginCheck(loginId, loginPw);
         	if (loginResult == 1) {
-        		// **로그인 성공하면 어디로 갈까?
         		session = request.getSession();
         		session.setAttribute("sessionId", loginId);
-        		viewpage = "board.do";
-        	} else {
-        		// **로그인 실패하면 실패 메시지 뜨고 다시 로그인 페이지로
         		viewpage = "index.do";
+        	} else {
+        	    request.setAttribute("errorMsg", "아이디 또는 비밀번호가 틀렸습니다.");
+        		viewpage = "login.do";
         	}
-        	//viewpage = "board.do";
         } else if (comm.equals("join.do")) {
         	viewpage = "join.jsp";
         } else if (comm.equals("joinAction.do")) {
@@ -81,32 +79,45 @@ public class FrontController extends HttpServlet {
         	
         	int joinResult = memberDao.memberJoin(memberDto);
         	if (joinResult == 1) {
-        		// ** 회원가입 성공 + 성공했습니다 메세지
+        		request.setAttribute("successMsg", "회원가입 성공하셨습니다.");
         		viewpage = "login.do";
         	} else {
-        		// 회원가입 실패 + 이전 페이지로
+        		request.setAttribute("errorMsg", "회원가입 실패하셨습니다.");
         		viewpage = "join.do";
         	}
         } else if (comm.equals("userEdit.do")) {
-        	// 회원정보 수정
-        	// 로그인 중이어야 함, 기존 정보가 보여야 함
         	session = request.getSession();
         	String sid = (String) session.getAttribute("sessionId");
        	
         	if (sid == null) {
-        		// ** 로그인 중이 아닙니다 메세지
-        		viewpage = "join.do";
+        		// 로그인 하지 않고 접속 했을 시
+        		viewpage = "login.do?error=login_required";
         	} else {
-        		// 로그인 중, 회원가입 정보 가져와야 함
         		memberDto = memberDao.memberInfo(sid);
         		request.setAttribute("m", memberDto);
+        		viewpage = "userEdit.jsp";
         	}
-        	viewpage = "userEdit.jsp";
-        } else if (comm.equals("")) {
+        } else if (comm.equals("editAction.do")) {
+        	String updateId = request.getParameter("updateId");
+        	String updatePw = request.getParameter("updatePw");
+        	String updateName = request.getParameter("updateName");
+        	String updateEmail = request.getParameter("updateEmail");
+        	int updateBirth = Integer.parseInt(request.getParameter("updateBirth"));
+        	memberDto = new MemberDto(updateId, updatePw, updateName, updateEmail, updateBirth);
         	
+        	int updateResult = memberDao.memberUpdate(memberDto);
+        	
+        	if (updateResult == 1) {
+        		// **회원정보 수정 완료 표시 해줘야 할 것 같음
+        		viewpage = "board.do";
+        	} else {
+        		// **회원정보 수정 실패 시 어떻게 해야할까
+        		viewpage = "index.jsp";
+        	}
         } else if (comm.equals("")) {
         	
         } else if (comm.equals("board.do")) {
+        	// 
         	viewpage = "board.jsp";
         } else if (comm.equals("")) {
         	
@@ -115,7 +126,7 @@ public class FrontController extends HttpServlet {
         } else if (comm.equals("logout.do")) {
         	session = request.getSession();
         	session.invalidate();
-        	// ****로그아웃 되었습니다 메세지 띄우기
+        	request.setAttribute("successMsg", "성공적으로 로그아웃 되었습니다.");
         	viewpage = "index.do";
         } else {
         	viewpage = "index.do";

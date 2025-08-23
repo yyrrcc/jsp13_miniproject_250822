@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,21 +29,21 @@
   
 	<section class="login">
 	  <h2>회원 정보 수정</h2>
-	  <form action="joinAction.do" method="post">
+	  <form action="editAction.do" method="post">
 	    <label>아이디</label>
-	    <input type="text" name="memberid" value="${m.memberid }" readonly>
+	    <input type="text" name="updateId" value="${m.memberid }" readonly>
 	    
 	    <label>변경 할 비밀번호</label>
-	    <input type="password" name="memberpw" value="${m.memberpw }">
+	    <input type="password" name="updatePw" value="${m.memberpw }" required>
 	    
 	    <label>이름</label>
-	    <input type="text" name="membername" value="${m.membername }">
+	    <input type="text" name="updateName" value="${m.membername }" required>
 	    
 	    <label>이메일</label>
-	    <input type="text" name="memberemail" value="${m.memberemail }">
+	    <input type="text" name="updateEmail" value="${m.memberemail }" required>
 	    
 	    <label>생년월일</label>
-	    <input type="text" name="memberbirth" value="${m.memberbirth }">
+	    <input type="text" name="updateBirth" value="${m.memberbirth }" required>
 		<br>
 	    <button type="submit">수정하기</button>
 	  </form>
