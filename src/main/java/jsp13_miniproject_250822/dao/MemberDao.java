@@ -43,7 +43,7 @@ public class MemberDao {
 		} finally {
 			try {
 				if (rs != null) {
-				rs.close();
+					rs.close();
 				}
 				if (pstmt != null) {
 					pstmt.close();
@@ -88,7 +88,7 @@ public class MemberDao {
 		} finally {
 			try {
 				if (rs != null) {
-				rs.close();
+					rs.close();
 				}
 				if (pstmt != null) {
 					pstmt.close();
@@ -134,7 +134,7 @@ public class MemberDao {
 			} finally {
 				try {
 					if (rs != null) {
-					rs.close();
+						rs.close();
 					}
 					if (pstmt != null) {
 						pstmt.close();
@@ -180,7 +180,7 @@ public class MemberDao {
 		} finally {
 			try {
 				if (rs != null) {
-				rs.close();
+					rs.close();
 				}
 				if (pstmt != null) {
 					pstmt.close();

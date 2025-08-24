@@ -31,8 +31,8 @@
 	  <h2>회원가입</h2>
 	  
 	  <!-- 회원가입 실패 시 -->
-	    <c:if test="${not empty errorMsg }">
-	    	<p style="text-align: center; color: red;">${errorMsg}</p>
+	    <c:if test="${not empty joinErrorMsg }">
+	    	<p style="text-align: center; color: red;">${joinErrorMsg}</p>
 	    </c:if>
 	  
 	  <form action="joinAction.do" method="post">

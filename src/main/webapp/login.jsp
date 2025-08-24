@@ -38,8 +38,8 @@
 	    <input type="password" name="loginPw" required>
 	    
 	    <!-- 아이디 비밀번호 틀렸을 때 -->
-	   	<c:if test="${not empty errorMsg }">
-	   		<p style="text-align: center; color: red;">${errorMsg}</p>
+	   	<c:if test="${not empty loginErrorMsg }">
+	   		<p style="text-align: center; color: red;">${loginErrorMsg}</p>
 	   	</c:if>
 
 	    <button type="submit">로그인</button>
@@ -53,7 +53,7 @@
   </footer>
   
   <!-- 자바스크립트 -->
-  <script>
+  <script type="text/javascript">
   // 회원 가입 성공 시
 	<c:if test="${not empty successMsg }">
 		alert("${successMsg }");
@@ -62,6 +62,10 @@
 	<c:if test="${param.error == 'login_required'}">
 	alert("로그인 후 접속할 수 있습니다.");
 	</c:if>
+  // 로그인 하지 않은 유저가 글쓰기 시도 할 때
+	<c:if test="${not empty WriteErrorMsg}">
+	    alert("${WriteErrorMsg}");
+	</c:if>	
   </script>
   
 </body>

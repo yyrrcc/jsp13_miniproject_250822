@@ -64,8 +64,13 @@
 }
 
 /* 글쓰기 버튼 */
+.btnn {
+  text-align: right;
+}
+
 .board .btn {
   display: inline-block;
+  text-align: right;
   padding: 10px 18px;
   background-color: #5dade2;
   color: white;
@@ -76,4 +81,44 @@
 
 .board .btn:hover {
   background-color: #3498db;
+}
+
+
+/* 페이지 그룹 */
+.page-container {
+  text-align: center;
+}
+
+.pagebtn .pagebtn-link {
+  display: inline-block;
+  text-align: center;
+  padding: 5px 8px;
+  background-color: #5dade2;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+  margin: 0 5px;
+}
+
+.pagebtn-link:hover {
+  background-color: #3498db;
+}
+
+/* 현재 페이지 버튼 */
+.pagebtn .nowpagebtn-link {
+  display: inline-block;
+  text-align: center;
+  padding: 5px 8px;
+  background-color: #2571a4;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+  margin: 0 5px;
+  cursor: default;
+}
+.nowpagebtn-link:hover {
+  background-color: #2571a4;
 }

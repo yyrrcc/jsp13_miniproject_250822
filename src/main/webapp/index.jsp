@@ -30,16 +30,6 @@
 	<p>우리 동네 병원, 약국 정보를 한눈에 확인하세요.</p>
 	<p>건강 꿀팁은 게시판에서 공유할 수 있습니다!</p>
 	
-	<hr/>
-	<p>테스트용 링크 삽입</p>
-    <p><a href="index.do">홈</a></p>
-    <p><a href="login.do">로그인</a></p>
-    <p><a href="join.do">회원가입</a></p>
-    <p><a href="board.do">자유게시판</a></p>
-    <p><a href="#">문의사항</a></li>
-    <p><a href="userEdit.do">회원정보수정</a></p>
-    <p><a href="logout.do">로그아웃</a></p>
-    
 	</section>
   </main>
   
@@ -48,7 +38,7 @@
   </footer>
   
   <!-- 자바스크립트 -->
-  <script>
+  <script type="text/javascript">
   // 로그아웃 시
 	<c:if test="${not empty successMsg }">
 		alert("${successMsg }");
