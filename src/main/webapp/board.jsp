@@ -76,7 +76,7 @@
 		        <!-- 글제목 눌렀을 때 상세보기, 페이지넘버, 글넘버, 검색조건유무 다 넣기 -->
 		        <td>
 			        <a href="boardView.do?page=${nowPage }&bnum=${b.bnum }${isSearch ? '&searchType='.concat(searchType).concat('&keyword=').concat(keyword) : ''}">${b.btitle }</a>
-			        <span class="comment-count">(3)</span>
+			        <span class="comment-count">(0)</span>
 		        </td>
 		        <td>${b.memberid }</td>
 		        <td>${b.bhit }</td>

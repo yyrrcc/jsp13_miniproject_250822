@@ -38,8 +38,20 @@ public class ReplyDao {
             pstmt.setString(3, content);            
             sqlResult = pstmt.executeUpdate();
         } catch (Exception e) {
+        	System.out.println("DB 에러 발생, 댓글 등록 실패");
             e.printStackTrace();
-        }
+        } finally { 
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
         return sqlResult;
     }
 	
@@ -103,8 +115,23 @@ public class ReplyDao {
                 return rs.getInt("replyCount");
             }
         } catch (Exception e) {
+        	System.out.println("DB 에러 발생, 댓글 개수 가져오기 실패");
             e.printStackTrace();
-        }
+        } finally { 
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
         return 0;
     }
     
@@ -114,17 +141,28 @@ public class ReplyDao {
 
     
 	// 댓글 삭제
-    public int deleteReply(int replyId, String writer) {
-        String sql = "DELETE FROM reply WHERE reply_id = ? AND writer = ?";
+    public void deleteReply(int rid) {
+        String sql = "DELETE FROM reply WHERE rid = " + rid;
         try {
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, replyId);
-            pstmt.setString(2, writer);
-            return pstmt.executeUpdate();
+        	Class.forName(driverName);
+			conn = DriverManager.getConnection(url, username, password);
+			pstmt = conn.prepareStatement(sql);
+            pstmt.executeUpdate();
         } catch (Exception e) {
+        	System.out.println("DB 에러 발생, 댓글 삭제 실패");
             e.printStackTrace();
-        }
-        return -1;
+        } finally { 
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
     }
 
     

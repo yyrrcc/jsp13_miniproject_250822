@@ -170,8 +170,8 @@ public class FrontController extends HttpServlet {
         	request.setAttribute("boardDto", boardDto);
         	replyDtos = replyDao.getReplyList(bnum); // 댓글
         	int replyCount = replyDao.getReplyCount(bnum);
-        	request.setAttribute("replyDtos", replyDtos);
         	request.setAttribute("replyCount", replyCount);
+        	request.setAttribute("replyDtos", replyDtos);
         	viewpage = "boardView.jsp";
         } else if (comm.equals("boardWrite.do")) {
         	session = request.getSession();
@@ -216,9 +216,6 @@ public class FrontController extends HttpServlet {
         
         
         // 댓글
-        else if (comm.equals("")) {
-        	
-        } 
         else if (comm.equals("replyWriteAction.do")) {
         	int page = Integer.parseInt(request.getParameter("page"));
         	int bnum = Integer.parseInt(request.getParameter("bnum"));
@@ -227,13 +224,19 @@ public class FrontController extends HttpServlet {
         	int replyResult = replyDao.insertReply(bnum, writer, content);
         	if (replyResult == 1) {
         		// 댓글 성공
-        		viewpage = "boardView.do?page=" + page +"&bnum=" + bnum;
+        		response.sendRedirect("boardView.do?page=" + page + "&bnum=" + bnum);
+        		return;
         	} else {
         		// 댓글 실패
         		viewpage = "index.do";
         	}
-        } else if (comm.equals("")) {
-        	
+        } else if (comm.equals("replyDeleteAction.do")) {
+        	int rid = Integer.parseInt(request.getParameter("rid"));
+        	int page = Integer.parseInt(request.getParameter("page"));
+        	int bnum = Integer.parseInt(request.getParameter("bnum"));
+        	replyDao.deleteReply(rid);
+    		response.sendRedirect("boardView.do?page=" + page + "&bnum=" + bnum);
+    		return;
         } else if (comm.equals("")) {
         	
         } else if (comm.equals("")) {
