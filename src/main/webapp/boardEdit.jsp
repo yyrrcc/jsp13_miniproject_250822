@@ -15,13 +15,23 @@
     <h1><a href="index.do">🏥 동네 병원·약국 안내</a></h1>
     <nav>
       <ul>
-        <li><a href="index.do">홈</a></li>
-        <li><a href="login.do">로그인</a></li>
-        <li><a href="join.do">회원가입</a></li>
-        <li><a href="board.do">자유게시판</a></li>
-        <li><a href="#">문의사항</a></li>
-        <li><a href="userEdit.do">회원정보수정</a></li>
-        <li><a href="logout.do">로그아웃</a></li>        
+        <c:choose>
+        	<c:when test="${not empty sessionScope.sessionId }">
+        		<li><a href="index.do">홈</a></li>
+        		<li><a href="#">[${sessionScope.sessionId }님 로그인 중]</a></li>
+        		<li><a href="board.do">자유게시판</a></li>
+		        <li><a href="#">문의사항</a></li>
+		        <li><a href="userEdit.do">회원정보수정</a></li>
+		        <li><a href="logout.do">로그아웃</a></li>
+        	</c:when>
+        	<c:otherwise>
+        		<li><a href="index.do">홈</a></li>
+        		<li><a href="login.do">로그인</a></li>
+        		<li><a href="join.do">회원가입</a></li>
+        		<li><a href="board.do">자유게시판</a></li>  		
+        		<li><a href="#">문의사항</a></li>
+        	</c:otherwise>
+        </c:choose>
       </ul>
     </nav>
   </header>
@@ -29,10 +39,10 @@
 	<section class="board-write">
 		<h2>글 수정하기</h2>
 		
-		<form action="boardEditAction.do?bnum=${boardDto.bnum }" method="post">
+		<form action="boardEditAction.do?page=${param.page }&bnum=${boardDto.bnum }${not empty param.searchType ? '&searchType='.concat(param.searchType) : ''}${not empty param.keyword ? '&keyword='.concat(param.keyword) : ''}" method="post">
 		    <div class="form-group">
 		      <label>작성자</label>
-		      <input type="text" name="writer" value="${sessionScope.sessionId }" readonly>
+		      <input type="text" name="writer" value="${boardDto.memberid }" readonly>
 		    </div>
 		    
 		    <div class="form-group">
@@ -63,7 +73,7 @@
 		    <div class="btn-group">
 		      <button type="submit">수정하기</button>
 		      <button type="reset">원상복구</button>
-		      <a href="board.do" class="btn">목록으로</a>
+		      <a href="board.do?page=${param.page }${not empty param.searchType ? '&searchType='.concat(param.searchType) : ''}${not empty param.keyword ? '&keyword='.concat(param.keyword) : ''}" class="btn">목록으로</a>
 		    </div>
 		</form>
 	</section>

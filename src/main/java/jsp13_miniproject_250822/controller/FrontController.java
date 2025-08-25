@@ -98,7 +98,7 @@ public class FrontController extends HttpServlet {
         		request.setAttribute("m", memberDto);
         		viewpage = "userEdit.jsp";
         	}
-        } else if (comm.equals("editAction.do")) {
+        } else if (comm.equals("userEditAction.do")) {
         	String updateId = request.getParameter("updateId");
         	String updatePw = request.getParameter("updatePw");
         	String updateName = request.getParameter("updateName");
@@ -109,11 +109,11 @@ public class FrontController extends HttpServlet {
         	int updateResult = memberDao.memberUpdate(memberDto);
         	
         	if (updateResult == 1) {
-        		// **회원정보 수정 완료 표시 해줘야 할 것 같음
-        		viewpage = "board.do";
+        		response.sendRedirect("userEdit.do?msg=success");
+        		return; // 리턴도 꼭 해줘야 함!
         	} else {
-        		// **회원정보 수정 실패 시 어떻게 해야할까
-        		viewpage = "index.jsp";
+        		response.sendRedirect("userEdit.do?msg=error");
+        		return;
         	}
         } else if (comm.equals("")) {
         	
@@ -180,11 +180,12 @@ public class FrontController extends HttpServlet {
         	String content = request.getParameter("content");
         	int writeResult = boardDao.boardWrite(writer, title, content);
         	if (writeResult == 1) {
-        		// **글 작성 성공 후 글 detail 확인하러 가기
-        		viewpage = "board.do";
+        		response.sendRedirect("board.do");
+        		return; // 리턴도 꼭 해줘야 함!
         	} else {
-        		// **글 작성 실패
-        		viewpage = "boardWrite.do";
+        		request.setAttribute("boardwriteErrorMsg", "글 등록에 실패하셨습니다");
+        		int page = Integer.parseInt(request.getParameter("page"));
+        		viewpage = "boardWrite.do?page=" + page;
         	}
         } else if (comm.equals("boardEdit.do")) {
         	int bnum = Integer.parseInt(request.getParameter("bnum"));
@@ -206,9 +207,16 @@ public class FrontController extends HttpServlet {
         	
         } else if (comm.equals("logout.do")) {
         	session = request.getSession();
-        	session.invalidate();
-        	request.setAttribute("successMsg", "성공적으로 로그아웃 되었습니다.");
-        	viewpage = "index.do";
+        	String sid = (String) session.getAttribute("sessionId");
+        	if (sid != null) {
+	        	session.invalidate();
+	        	request.setAttribute("successMsg", "성공적으로 로그아웃 되었습니다.");
+	        	viewpage = "index.do";
+        	} else {
+        		// ********** 로그인 했을 때 보이거나
+        		request.setAttribute("logoutErrorMsg", "로그인 하지 않았습니다.");
+        		viewpage = "login.do";
+        	}
         } else {
         	viewpage = "index.do";
         }

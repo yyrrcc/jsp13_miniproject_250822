@@ -15,13 +15,23 @@
     <h1><a href="index.do">🏥 동네 병원·약국 안내</a></h1>
     <nav>
       <ul>
-        <li><a href="index.do">홈</a></li>
-        <li><a href="login.do">로그인</a></li>
-        <li><a href="join.do">회원가입</a></li>
-        <li><a href="board.do">자유게시판</a></li>
-        <li><a href="#">문의사항</a></li>
-        <li><a href="userEdit.do">회원정보수정</a></li>
-        <li><a href="logout.do">로그아웃</a></li>        
+        <c:choose>
+        	<c:when test="${not empty sessionScope.sessionId }">
+        		<li><a href="index.do">홈</a></li>
+        		<li><a href="#">[${sessionScope.sessionId }님 로그인 중]</a></li>
+        		<li><a href="board.do">자유게시판</a></li>
+		        <li><a href="#">문의사항</a></li>
+		        <li><a href="userEdit.do">회원정보수정</a></li>
+		        <li><a href="logout.do">로그아웃</a></li>
+        	</c:when>
+        	<c:otherwise>
+        		<li><a href="index.do">홈</a></li>
+        		<li><a href="login.do">로그인</a></li>
+        		<li><a href="join.do">회원가입</a></li>
+        		<li><a href="board.do">자유게시판</a></li>  		
+        		<li><a href="#">문의사항</a></li>
+        	</c:otherwise>
+        </c:choose>
       </ul>
     </nav>
   </header>
@@ -30,11 +40,16 @@
 	  <h2>게시판</h2>
 	  
 	  <!-- 로그인 완료한 회원 아이디 가져오고 싶음 -->
-	  <c:if test="${not empty sessionScope.sessionId }">
-	  	<p style="text-align: center;">${sessionScope.sessionId }님 환영합니다!</p>
-	  </c:if>
+	  <c:choose>
+		<c:when test="${not empty sessionScope.sessionId }">
+			<p style="text-align: center;">${sessionScope.sessionId }님은 '정회원'입니다.</p>
+		</c:when>
+		<c:otherwise>
+			<p style="text-align: center;">로그인 해야 글쓰기가 가능합니다.</p>
+		</c:otherwise>
+	</c:choose>
 
-	  <form method="get" action="board.do" class="search-box">
+	  <form method="get" action="board.do?page=${nowPage }" class="search-box">
 	  	<select name="searchType" class="">
 	  		<option value="btitle" ${searchType == 'btitle' ? 'selected' : '' }>제목</option>
 	  		<option value="bcontent" ${searchType == 'bcontent' ? 'selected' : '' }>내용</option>
@@ -58,7 +73,11 @@
 	      <c:forEach items="${boardDtos }" var="b">
 	          <tr>
 		        <td>${b.rownum }</td>
-		        <td><a href="boardView.do?bnum=${b.bnum }">${b.btitle }</a></td>
+		        <!-- 글제목 눌렀을 때 상세보기, 페이지넘버, 글넘버, 검색조건유무 다 넣기 -->
+		        <td>
+			        <a href="boardView.do?page=${nowPage }&bnum=${b.bnum }${isSearch ? '&searchType='.concat(searchType).concat('&keyword=').concat(keyword) : ''}">${b.btitle }</a>
+			        <span class="comment-count">(3)</span>
+		        </td>
 		        <td>${b.memberid }</td>
 		        <td>${b.bhit }</td>
 		        <td>${b.bdate }</td>
@@ -78,7 +97,7 @@
 <p>isSearch: ${isSearch}</p>
 <p>searchType: ${searchType}</p>
 <p>keyword: ${keyword}</p>
-</div> -->
+</div>  -->
  
 	  <!-- 페이지 그룹 -->
 	  <div class="page-container">
@@ -110,7 +129,7 @@
 	  </div>
 	  <br>
 	  <!-- 글쓰기 버튼 -->
-	  <div class="btnn"><a href="boardWrite.do" class="btn">글쓰기</a></div> 
+	  <div class="btnn"><a href="boardWrite.do?page=${nowPage }" class="btn">글쓰기</a></div> 
 	</section>
 
   <footer>
@@ -122,7 +141,7 @@
 	  // 삭제 완료 되었을 때
 		<c:if test="${not empty deleteCompleteMsg}">
 		    alert("${deleteCompleteMsg}");
-		</c:if>	
+		</c:if>
 	</script>
 
 </body>

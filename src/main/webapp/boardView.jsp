@@ -15,13 +15,23 @@
     <h1><a href="index.do">🏥 동네 병원·약국 안내</a></h1>
     <nav>
       <ul>
-        <li><a href="index.do">홈</a></li>
-        <li><a href="login.do">로그인</a></li>
-        <li><a href="join.do">회원가입</a></li>
-        <li><a href="board.do">자유게시판</a></li>
-        <li><a href="#">문의사항</a></li>
-        <li><a href="userEdit.do">회원정보수정</a></li>
-        <li><a href="logout.do">로그아웃</a></li>        
+        <c:choose>
+        	<c:when test="${not empty sessionScope.sessionId }">
+        		<li><a href="index.do">홈</a></li>
+        		<li><a href="#">[${sessionScope.sessionId }님 로그인 중]</a></li>
+        		<li><a href="board.do">자유게시판</a></li>
+		        <li><a href="#">문의사항</a></li>
+		        <li><a href="userEdit.do">회원정보수정</a></li>
+		        <li><a href="logout.do">로그아웃</a></li>
+        	</c:when>
+        	<c:otherwise>
+        		<li><a href="index.do">홈</a></li>
+        		<li><a href="login.do">로그인</a></li>
+        		<li><a href="join.do">회원가입</a></li>
+        		<li><a href="board.do">자유게시판</a></li>  		
+        		<li><a href="#">문의사항</a></li>
+        	</c:otherwise>
+        </c:choose>
       </ul>
     </nav>
   </header>
@@ -53,12 +63,16 @@
 	    <label>내용</label>
 	    <p>${boardDto.bcontent }</p>
 	  </div>
-	
+	  
 	  <div class="btn-group">
-	    <a href="board.do" class="btn">목록으로</a>
-	    <a href="boardEdit.do?bnum=${boardDto.bnum}" class="btn">수정</a>
-		<a href="#" class="btn delete" onclick="deleteBoard(${boardDto.bnum})">삭제</a>
-	  </div>
+	    <!-- param.page 부분 헷갈리지 말기! -->
+	    <a href="board.do?page=${param.page }${not empty param.searchType ? '&searchType='.concat(param.searchType) : ''}${not empty param.keyword ? '&keyword='.concat(param.keyword) : ''}" class="btn">목록으로</a>
+	    <!-- 권한 있는 사람만 수정, 삭제 가능 / 그 외 사람에겐 버튼 안 보이게 하기 -->
+	    <c:if test="${sessionId == boardDto.memberid || sessionId == 'admin' }">
+		    <a href="boardEdit.do?page=${param.page }&bnum=${boardDto.bnum}${not empty param.searchType ? '&searchType='.concat(param.searchType) : ''}${not empty param.keyword ? '&keyword='.concat(param.keyword) : ''}" class="btn">수정</a>
+			<a href="#" class="btn delete" onclick="deleteBoard(${boardDto.bnum})">삭제</a>
+	    </c:if>
+	    </div>
 	</section>
 	
 	<footer>

@@ -234,7 +234,7 @@ public class BoardDao {
 			pstmt.setString(1, title);
 			pstmt.setString(2, content);
 			pstmt.setString(3, writer);
-			pstmt.executeUpdate();	
+			SqlResult = pstmt.executeUpdate();	
 		} catch (Exception e) {
 			System.out.println("DB 에러 발생, 새 글 작성 실패");
 			e.printStackTrace();
@@ -301,9 +301,8 @@ public class BoardDao {
 	
 	
 	// 글 수정 메서드
-	public int boardEdit(int bnum, String title, String content) {
+	public void boardEdit(int bnum, String title, String content) {
 		String sql = "UPDATE board SET btitle = ?, bcontent = ? WHERE bnum = ?";
-		int sqlResult = 0;
 		try {
 			Class.forName(driverName);
 			conn = DriverManager.getConnection(url, username, password);
@@ -328,7 +327,6 @@ public class BoardDao {
 				e.printStackTrace();
 			}
 		}
-		return sqlResult;
 	}
 			
 	
