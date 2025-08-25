@@ -9,6 +9,8 @@
 <title>게시글 상세보기</title>
 <link rel="stylesheet" href="css/common.css">
 <link rel="stylesheet" href="css/boardView.css">
+<link rel="stylesheet" href="css/boardReply.css">
+
 </head>
 <body>
   <header>
@@ -75,13 +77,54 @@
 	    </div>
 	</section>
 	
+	
+	<!-- 댓글 영역 -->
+	<section class="reply">
+		<h3>댓글 (${replyCount })</h3>
+	    
+	    <div class="reply-list">
+	    
+	    
+	    <div class="reply-item">
+	      <p><strong>수정삭제버튼구현하기</strong> | 2025-08-22 15:00</p>
+	      <p>저도 이 약국 자주 갑니다. 친절해요!</p>
+	      <% if("홍길동".equals(session.getAttribute("sid"))) { %>
+	        <a href="replyDeleteAction.jsp?rid=1" class="reply-delete">삭제</a>
+	      <% } %>
+	    </div>
+    
+		<c:forEach items="${replyDtos }" var="r">
+			<div class="reply-item">
+				<p><strong>${r.memberid }</strong> | ${r.rdate }</p>
+				<p>${r.rcontent }</p>
+			</div>       
+		</c:forEach>
+		</div>
+	  
+	<!-- form action **************************** -->
+    <form action="replyWriteAction.do?page=${param.page }&bnum=${boardDto.bnum}" method="post" class="reply-form">
+    	<c:choose>
+	    	<c:when test="${not empty sessionScope.sessionId }">
+	    		<label>ㅇㅇㅇ님 댓글을 달아보세요</label>
+		    	<p><input type="text" name="writer" value="${sessionScope.sessionId }" readonly></p>
+				<textarea name="content" rows="3" placeholder="댓글을 입력하세요..." required></textarea>
+	    		<button type="submit">댓글 등록</button>
+	    	</c:when>
+	    	<c:otherwise>
+	    		<textarea name="content" rows="3" placeholder="로그인 후 작성할 수 있습니다." required></textarea>
+	    	</c:otherwise>
+    	</c:choose>
+    </form>
+	</section>	
+	
+
 	<footer>
     	<p>(c) 2025 동네 병원·약국 안내 | Team JSP Mini Project</p>
 	</footer>
 	
 	<!-- 자바스크립트 -->
 	<script type="text/javascript">
-	  // 글 삭제 버튼 눌렀을 때
+		// 글 삭제 버튼 눌렀을 때
 		function deleteBoard(bnum) {
 	    	if (confirm("정말로 글을 삭제하시겠습니까?")) {
 	        	location.href = "boardDeleteAction.do?bnum=" + bnum;

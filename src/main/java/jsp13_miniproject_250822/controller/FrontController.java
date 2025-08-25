@@ -9,8 +9,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jsp13_miniproject_250822.dao.BoardDao;
 import jsp13_miniproject_250822.dao.MemberDao;
+import jsp13_miniproject_250822.dao.ReplyDao;
 import jsp13_miniproject_250822.dto.BoardDto;
 import jsp13_miniproject_250822.dto.MemberDto;
+import jsp13_miniproject_250822.dto.ReplyDto;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,8 +50,12 @@ public class FrontController extends HttpServlet {
         MemberDao memberDao = new MemberDao(); 
         MemberDto memberDto = null;
         List<BoardDto> boardDtos = null;
+        ReplyDto replyDto = null;
+        ReplyDao replyDao = new ReplyDao();
+        List<ReplyDto> replyDtos = null;
         
         
+        // 회원
         if (comm.equals("index.do")) {
         	viewpage = "index.jsp";
         } else if (comm.equals("login.do")) {
@@ -115,13 +121,11 @@ public class FrontController extends HttpServlet {
         		response.sendRedirect("userEdit.do?msg=error");
         		return;
         	}
-        } else if (comm.equals("")) {
-        	
-        } else if (comm.equals("")) {
-        	
-        } else if (comm.equals("")) {
-        	
-        } else if (comm.equals("board.do")) {
+        } 
+        
+        
+        // 게시판
+        else if (comm.equals("board.do")) {
         	// 페이징 (변수 초기화, 페이지넘버, 페이지블록) + 검색 기능
         	int nowPage = 1;
         	int totalCount;
@@ -164,6 +168,10 @@ public class FrontController extends HttpServlet {
         	boardDao.updateHit(bnum);
         	boardDto = boardDao.boardView(bnum);
         	request.setAttribute("boardDto", boardDto);
+        	replyDtos = replyDao.getReplyList(bnum); // 댓글
+        	int replyCount = replyDao.getReplyCount(bnum);
+        	request.setAttribute("replyDtos", replyDtos);
+        	request.setAttribute("replyCount", replyCount);
         	viewpage = "boardView.jsp";
         } else if (comm.equals("boardWrite.do")) {
         	session = request.getSession();
@@ -203,9 +211,38 @@ public class FrontController extends HttpServlet {
         	boardDao.boardDelete(bnum);
         	request.setAttribute("deleteCompleteMsg", "삭제가 완료되었습니다.");
         	viewpage = "board.do";
+        } 
+        
+        
+        
+        // 댓글
+        else if (comm.equals("")) {
+        	
+        } 
+        else if (comm.equals("replyWriteAction.do")) {
+        	int page = Integer.parseInt(request.getParameter("page"));
+        	int bnum = Integer.parseInt(request.getParameter("bnum"));
+        	String writer = request.getParameter("writer");
+        	String content = request.getParameter("content");
+        	int replyResult = replyDao.insertReply(bnum, writer, content);
+        	if (replyResult == 1) {
+        		// 댓글 성공
+        		viewpage = "boardView.do?page=" + page +"&bnum=" + bnum;
+        	} else {
+        		// 댓글 실패
+        		viewpage = "index.do";
+        	}
         } else if (comm.equals("")) {
         	
-        } else if (comm.equals("logout.do")) {
+        } else if (comm.equals("")) {
+        	
+        } else if (comm.equals("")) {
+        	
+        }
+        
+        
+        // 로그아웃
+        else if (comm.equals("logout.do")) {
         	session = request.getSession();
         	String sid = (String) session.getAttribute("sessionId");
         	if (sid != null) {
