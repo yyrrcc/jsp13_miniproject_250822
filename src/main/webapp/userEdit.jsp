@@ -21,7 +21,7 @@
         		<li><a href="index.do">홈</a></li>
         		<li><a href="#">[${sessionScope.sessionId }님 로그인 중]</a></li>
         		<li><a href="board.do">자유게시판</a></li>
-		        <li><a href="#">문의사항</a></li>
+		        <li><a href="reservation.do">문의사항</a></li>
 		        <li><a href="userEdit.do">회원정보수정</a></li>
 		        <li><a href="logout.do">로그아웃</a></li>
         	</c:when>
@@ -30,7 +30,7 @@
         		<li><a href="login.do">로그인</a></li>
         		<li><a href="join.do">회원가입</a></li>
         		<li><a href="board.do">자유게시판</a></li>  		
-        		<li><a href="#">문의사항</a></li>
+        		<li><a href="reservation.do">문의사항</a></li>
         	</c:otherwise>
         </c:choose>
       </ul>

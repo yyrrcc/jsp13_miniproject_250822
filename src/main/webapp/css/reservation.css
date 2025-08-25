@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+.reservation-container {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #f5faff;
+  border-radius: 12px;
+  font-family: 'Noto Sans KR', Arial, sans-serif;
+}
+
+.reservation-container h2 {
+  font-size: 20px;
+  color: #2a5d9f;
+  margin-bottom: 15px;
+  border-left: 5px solid #2a5d9f;
+  padding-left: 10px;
+}
+
+.reservation-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 20px;
+  margin-bottom: 30px;
+}
+
+.reservation-form label {
+  grid-column: span 2;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.reservation-form input,
+.reservation-form textarea {
+  grid-column: span 2;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #a9cff3;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Noto Sans KR', Arial, sans-serif;
+}
+
+.reservation-form textarea {
+  resize: none;
+}
+
+.reservation-form button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.reservation-form button[type="submit"] {
+  background-color: #2a5d9f;
+  color: white;
+}
+
+.reservation-form button[type="reset"] {
+  background-color: #ddd;
+  color: black;
+}
+
+.reservation-form button:hover {
+  opacity: 0.85;
+}
+
+/* 예약 확인 테이블 */
+.reservation-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.reservation-table th, .reservation-table td {
+  border: 1px solid #a9cff3;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.reservation-table th {
+  background-color: #2a5d9f;
+  color: white;
+}
+
+.btn-update, .btn-delete {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.btn-update {
+  background: #4CAF50;
+  color: white;
+}
+
+.btn-delete {
+  background: #f44336;
+  color: white;
+}

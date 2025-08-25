@@ -22,7 +22,7 @@
         		<li><a href="index.do">홈</a></li>
         		<li><a href="#">[${sessionScope.sessionId }님 로그인 중]</a></li>
         		<li><a href="board.do">자유게시판</a></li>
-		        <li><a href="#">문의사항</a></li>
+		        <li><a href="reservation.do">문의사항</a></li>
 		        <li><a href="userEdit.do">회원정보수정</a></li>
 		        <li><a href="logout.do">로그아웃</a></li>
         	</c:when>
@@ -31,7 +31,7 @@
         		<li><a href="login.do">로그인</a></li>
         		<li><a href="join.do">회원가입</a></li>
         		<li><a href="board.do">자유게시판</a></li>  		
-        		<li><a href="#">문의사항</a></li>
+        		<li><a href="reservation.do">문의사항</a></li>
         	</c:otherwise>
         </c:choose>
       </ul>
@@ -79,6 +79,7 @@
 	
 	
 	<!-- 댓글 영역 -->
+	<!-- *****댓글을 쓰고 난 후 목록 이동이 이상함! -->
 	<section class="reply">
 		<h3>댓글 (${replyCount })</h3>
 	    
@@ -87,7 +88,7 @@
 				<div class="reply-item">
 					<p><strong>${r.memberid }</strong> | ${r.rdate }</p>
 					<p>${r.rcontent }</p>
-					<!-- **이것도 권한 있는 사람만 삭제 할 수 있게 해줘야 함 -->
+					<!-- *******이것도 권한 있는 사람만 삭제 할 수 있게 해줘야 함 -->
 					<a href="#" class="reply-delete" onclick="deleteReply(${r.rid},${param.bnum },${param.page})">삭제</a>
 				</div>       
 			</c:forEach>

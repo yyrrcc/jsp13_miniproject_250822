@@ -241,6 +241,17 @@ public class FrontController extends HttpServlet {
         	
         } else if (comm.equals("")) {
         	
+        } 
+        
+        // 예약
+        else if (comm.equals("reservation.do")) {
+        	viewpage = "reservation.jsp";
+        } else if (comm.equals("")) {
+        	
+        } else if (comm.equals("")) {
+        	
+        } else if (comm.equals("")) {
+        	
         }
         
         
